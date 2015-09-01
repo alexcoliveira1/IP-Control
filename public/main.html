@@ -1,0 +1,40 @@
+<div class="clearfix">
+  <form ng-Submit="post()" ng-show="authenticated">
+    <h4>{{current_user}} says</h4>
+    <textarea required class="form-control" maxlength="200" rows="3" placeholder="Say something" ng-model="newPost.text"></textarea>
+    <input class="btn submit-btn pull-right" type="submit" value="Chirp!" />
+  </form>
+  <form class="form-auth" ng-submit="addAddress()" ng-show="authenticated">
+  	<h2>Adicionar IP</h2>
+  	<p class="text-warning">{{error_message}}</p>
+  	<input required type="ipAddress" ng-model="newAddr.ipAddress" placeholder="Endereço IP" class="form-control"><br>
+  	<input required type="description" ng-model="newAddr.desc" placeholder="Descrição" class="form-control"><br>
+  	<input type="submit" value="Adicionar" class="btn btn-primary" />
+  </form>
+</div>
+<div>
+  <div id="post-stream" class="left-div">
+  	<h4>Chirp Feed</h4>
+  		<div class="post" ng-repeat="post in posts | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
+  			<pre style="background-color: transparent;border: 0px;padding: 0px;">{{post.text}}</pre>
+  			<small>Posted by @{{post.created_by}}</small>
+  			<small class="pull-right">{{post.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+  		</div>
+  </div>
+  <div id="post-stream" class="right-div">
+  	<h4>List IP's</h4>
+  	<div class="post" style="clear: both;overflow:auto;" ng-repeat="address in addresses | orderBy:'ipAddress':true" ng-class-odd="'odd'" ng-class-even="'even'">
+  		<div style="float: left">
+        <div style="clear: both;padding-bottom: 5px">
+          <p> IP: {{address.ipAddress}}</p>
+          <p> Descrição: {{address.desc}}</p>
+        </div>
+      </div>
+      <div style="float: right;" ><input type="submit" value="Deletar" class="btn btn-primary"/></div>
+      <div style="clear: both;padding-top: 5px">
+        <small style="float: left;">by @{{address.created_by}}</small>
+        <small style="float: right;">{{address.created_at | date:"h:mma 'on' MMM d, y"}}</small>
+      </div>
+    </div>
+  </div>
+</div>
